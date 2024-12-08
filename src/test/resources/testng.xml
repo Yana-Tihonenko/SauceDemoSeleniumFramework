@@ -1,0 +1,30 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="false">
+    <!-- Глобальные параметры для всей тестовой серии -->
+
+    <parameter name="baseUrl" value="https://www.saucedemo.com/"/>
+    <parameter name="loginUsername" value="standard_user"/>
+    <parameter name="loginPassword" value="secret_sauce"/>
+    <parameter name="productsPageUrl" value="https://www.saucedemo.com/inventory.html"/>
+    <parameter name="checkoutPageUrl" value="https://www.saucedemo.com/checkout-step-one.html"/>
+    <parameter name="itemDetailPageUrl" value="https://www.saucedemo.com/inventory-item.html?id="/>
+    <parameter name="cartPageUrl" value="https://www.saucedemo.com/cart.html"/>
+
+
+    <listeners>
+        <listener class-name="listeners.TestLoggerListener"/>
+    </listeners>
+
+    <test name="Login Tests">
+        <classes>
+            <class name="LoginTest"/>
+        </classes>
+    </test>
+
+    <test name="Product Tests">
+        <classes>
+            <class name="ItemDetailTest"/>
+            <class name="ProductCardsTest"/>
+        </classes>
+    </test>
+</suite>
