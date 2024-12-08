@@ -1,6 +1,5 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 <suite name="Suite" parallel="false">
-    <!-- Глобальные параметры для всей тестовой серии -->
 
     <parameter name="baseUrl" value="https://www.saucedemo.com/"/>
     <parameter name="loginUsername" value="standard_user"/>

@@ -9,21 +9,20 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <!-- Версия Java -->
+
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
-        <!-- Selenium Java -->
+
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
             <version>4.11.0</version>
         </dependency>
 
-        <!-- WebDriver Manager для автоматического управления драйверами -->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
@@ -50,14 +49,14 @@
 
     <build>
         <plugins>
-            <!-- Maven Surefire Plugin для запуска тестов -->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version> <!-- Убедитесь, что версия актуальна -->
+                <version>3.1.2</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <!-- Путь к файлу testng.xml -->
+
                         <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
                 </configuration>
