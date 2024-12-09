@@ -131,14 +131,14 @@ public class ProductPage extends BasePage {
   public void addItemsToCart(int countAddedItem) {
     logger.info("Adding {} items to the cart.", countAddedItem);
     List<ProductCard> productCardList = getListProductCard();
-    if (validateItemCount(countAddedItem, productCardList)) {
+    if (!validateItemCount(countAddedItem, productCardList)) {
       return;
     }
 
     for (int i = 0; i < countAddedItem; i++) {
-      ProductCard randomItem = selectRandomProductCard();
-      randomItem.clickAddOrRemoveButton();
-      logger.info("Item added to cart. Item: {}", randomItem);
+      int indexItem = getRandomIndexItem(productCardList);
+      productCardList.get(indexItem).clickAddOrRemoveButton();
+      logger.info("Item added to cart. Item: {}", indexItem);
     }
   }
 
