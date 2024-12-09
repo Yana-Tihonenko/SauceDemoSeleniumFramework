@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 public class ProductPage extends BasePage {
 
@@ -51,15 +51,22 @@ public class ProductPage extends BasePage {
   public List<ProductCard> getListProductCardByIndexItemList(List<Integer> indexItemList) {
     logger.debug("Building a list of product cards from the page by item index list.");
 
-    List<WebElement> listProductCard = getProductCardElements();
+   List<WebElement> listProductCard = getProductCardElements();
 
-    Stream<WebElement> filteredStream = indexItemList == null || indexItemList.isEmpty()
-        ? listProductCard.stream()
-        : indexItemList.stream().map(listProductCard::get);
+    if (indexItemList == null || indexItemList.isEmpty()) {
+      return listProductCard.stream()
+          .map(this::buildProductCard)
+          .collect(Collectors.toList());
+    }
 
-    return filteredStream
-        .map(this::buildProductCard)
-        .collect(Collectors.toList());
+    List<ProductCard> filteredList = new ArrayList<>();
+    for (int index : indexItemList) {
+      if (index >= listProductCard.size()) {
+        throw new IndexOutOfBoundsException("Index out of bounds for current product list.");
+      }
+      filteredList.add(buildProductCard(listProductCard.get(index)));
+    }
+    return filteredList;
 
   }
 
@@ -146,16 +153,16 @@ public class ProductPage extends BasePage {
     logger.info("Adding {} items to the cart and returning their indices.", countAddedItem);
     List<Integer> listIndexAddedItems = new ArrayList<>();
     List<ProductCard> productCardList = getListProductCard();
-    if (validateItemCount(countAddedItem, productCardList)) {
+    if (!validateItemCount(countAddedItem, productCardList)) {
       return listIndexAddedItems;
     }
 
     for (int i = 0; i < countAddedItem; i++) {
       int indexItem = getRandomIndexItem(productCardList);
+      listIndexAddedItems.add(indexItem);
       productCardList.get(indexItem).clickAddOrRemoveButton();
       logger.info("Item added to cart. Index: {}", indexItem);
       productCardList = getListProductCard();
-      listIndexAddedItems.add(indexItem);
     }
     return listIndexAddedItems;
   }
