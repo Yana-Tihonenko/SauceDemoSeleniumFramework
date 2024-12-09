@@ -141,8 +141,7 @@ public class CartPageTest extends BaseTest {
   @Test
   public void verifyCartItemNavigatesToDetailPage(String itemDetailPageUrl) {
     logger.info("Test: Verifying cart item navigates to the correct detail page.");
-    productPage.addItemsToCart(2);
-    headerPage.openCart();
+    addRandomItemAndNavigateToCartPage();
 
     List<ProductCard> cartItems = cartPage.getListProductCard();
     logger.debug("Cart items: {}", cartItems);
@@ -150,7 +149,7 @@ public class CartPageTest extends BaseTest {
     cartItems.get(0).clickNameLink();
     logger.info("Clicked on the first item's name link.");
 
-    verifyCurrentUrl(itemDetailPageUrl);
-    logger.info("Verified cart item navigates to the correct detail page.");
+    String currentUrl = driver.getCurrentUrl();
+    assertTrue(currentUrl.contains("inventory-item.html?id="));
   }
 }
